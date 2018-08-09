@@ -185,7 +185,10 @@
     <script type="text/javascript">
         $("#submit").on("click", function (e) {
             e.preventDefault();
+
+            //if form passes validation
             if (validateForm()) {
+                //place results into object
                 var userData = {
                     name: $("#name").val(),
                     photo: $("#photo").val(),
@@ -203,17 +206,23 @@
                     ]
                 };
 
+                //make post request with newly created object
                 $.post("/api/friends", userData, function (data) {
+                    //append match name
                     $("#result-name").text(data.name);
+                    //append match photo
                     $("#result-photo").attr("src", data.photo);
+                    //show the modal
                     $("#modal").modal("toggle");
                 });
             }
             else {
+                //if validation fails, alert the user to fill everything out
                 alert("Please fill all fields and answer all questions!");
             }
         });
 
+        //function to validate form
         function validateForm() {
             var validForm = true;
             $(".form-control").each(function () {
